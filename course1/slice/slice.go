@@ -26,7 +26,7 @@ func main() {
 	}
 }
 
-// ReadInt reads an integer from standard input
+// ReadInt returns the result of strconv.Atoi or
 // returns io.EOF if it reads "X"
 func ReadInt() (num int, err error) {
 	strValue := ""
@@ -37,7 +37,7 @@ func ReadInt() (num int, err error) {
 	return strconv.Atoi(strValue)
 }
 
-// AppendSort appends the integer value to the array then returns the sorted array
+// AppendSort returns the sorted result of append
 func AppendSort(arr []int, val int) []int {
 	arr = append(arr, val)
 	sort.Ints(arr)

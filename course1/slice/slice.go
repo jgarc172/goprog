@@ -26,7 +26,7 @@ func main() {
 	}
 }
 
-// ReadInt returns the result of strconv.Atoi or
+// ReadInt reads from stdin and returns the result of strconv.Atoi or
 // returns io.EOF if it reads "X"
 func ReadInt() (num int, err error) {
 	strValue := ""

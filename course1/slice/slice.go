@@ -18,14 +18,17 @@ func main() {
 	fmt.Println("Please enter several integer values.  To stop, enter 'X'")
 	for err != io.EOF {
 		fmt.Print("Enter an integer: ")
-		num, err = readInt()
+		num, err = ReadInt()
 		if err == nil {
-			ints = appendSort(ints, num)
+			ints = AppendSort(ints, num)
 			fmt.Println(ints)
 		}
 	}
 }
-func readInt() (num int, err error) {
+
+// ReadInt reads an integer from standard input
+// returns io.EOF if it reads "X"
+func ReadInt() (num int, err error) {
 	strValue := ""
 	fmt.Scan(&strValue)
 	if strings.ToUpper(strValue) == "X" {
@@ -33,7 +36,9 @@ func readInt() (num int, err error) {
 	}
 	return strconv.Atoi(strValue)
 }
-func appendSort(arr []int, val int) []int {
+
+// AppendSort appends the integer value to the array then returns the sorted array
+func AppendSort(arr []int, val int) []int {
 	arr = append(arr, val)
 	sort.Ints(arr)
 	return arr

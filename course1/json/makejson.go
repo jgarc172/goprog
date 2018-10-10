@@ -1,4 +1,5 @@
-// Package main prompts user for Name and Address
+// Package main creates a map of keys and values for
+// Name and Address, obtained from stdin
 package main
 
 import (
@@ -8,11 +9,16 @@ import (
 )
 
 func main() {
-	var name, address string
-	name = PromptFor("Name")
-	fmt.Println("name is", name)
-	address = PromptFor("Address")
-	fmt.Println("address is", address)
+	var attr, value string
+	person := make(map[string]string)
+
+	attr = "name"
+	value = PromptFor(attr)
+	person[attr] = value
+	attr = "address"
+	value = PromptFor(attr)
+	person[attr] = value
+	fmt.Println(person)
 }
 
 // PromptFor prompts for an attribute and returns the value entered from stdin

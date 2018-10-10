@@ -1,24 +1,29 @@
-// Package main creates a map of keys and values for
+// Package main creates a JSON encoding of a map of keys and values for
 // Name and Address, obtained from stdin
 package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 )
 
 func main() {
 	var attr, value string
-	person := make(map[string]string)
+	contact := make(map[string]string)
 
 	attr = "name"
 	value = PromptFor(attr)
-	person[attr] = value
+	contact[attr] = value
 	attr = "address"
 	value = PromptFor(attr)
-	person[attr] = value
-	fmt.Println(person)
+	contact[attr] = value
+
+	b, err := json.Marshal(contact)
+	if err == nil {
+		fmt.Println(string(b))
+	}
 }
 
 // PromptFor prompts for an attribute and returns the value entered from stdin

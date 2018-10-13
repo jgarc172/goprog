@@ -1,4 +1,4 @@
-// Package bubble provides a Sort function that sorts a slice of integers
+// Package bubble provides BubbleSort and Swap functions that sort a slice of integers
 package main
 
 import (
@@ -7,19 +7,51 @@ import (
 
 func main() {
 	ints := make([]int, 4)
-	Sort(ints)
-	sorted := isSorted(ints)
-	fmt.Println("Sorted?:", sorted)
+	BubbleSort(ints)
+	fmt.Println("Sorted?:", isSorted(ints))
+	fmt.Println(ints)
+
 	ints = []int{3, 1, 4, 2}
-	Sort(ints)
-	sorted = isSorted(ints)
-	fmt.Println("Sorted?:", sorted)
+	BubbleSort(ints)
+	fmt.Println("Sorted?:", isSorted(ints))
+	fmt.Println(ints)
+
+	ints = []int{3, 0, 4, 0}
+	BubbleSort(ints)
+	fmt.Println("Sorted?:", isSorted(ints))
+	fmt.Println(ints)
 
 }
 
-// Sort sorts slice ints
-func Sort(ints []int) {
+// BubbleSort sorts slice ints in ascending order
+func BubbleSort(ints []int) {
+	// ints is a slice from 0 to N
+	N := len(ints) - 1
+	// assumes ints is not sorted
+	isSorted := false
+	// repeat until ints is sorted
+	for !isSorted {
+		// now assumes ints is sorted
+		// if every pair of elements is in order
+		isSorted = true
+		for i := 0; i < N; i++ {
+			if !inOrder(ints[i], ints[i+1]) {
+				isSorted = false
+				Swap(ints, i)
+			}
+		}
+	}
 
+}
+
+// Swap reverses the values at locations i and i + 1
+func Swap(ints []int, i int) {
+	ints[i], ints[i+1] = ints[i+1], ints[i]
+}
+
+// inOrder returns true if a and b are in ascending order
+func inOrder(a, b int) bool {
+	return a <= b
 }
 
 // isSorted returns weather or not ints is sorted
@@ -36,8 +68,4 @@ func isSorted(ints []int) (sorted bool) {
 	}
 	sorted = true
 	return
-}
-
-func inOrder(a, b int) bool {
-	return a <= b
 }

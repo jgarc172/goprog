@@ -1,4 +1,4 @@
-// Package read prints a list of names
+// Package read reads names from stdin, adds them to a list and prints the list
 package main
 
 import (
@@ -7,9 +7,13 @@ import (
 
 func main() {
 	names := make([]name, 0, 3)
-	n := name{"Joe", "Doe"}
+	var n name
+	var f, l string
+	fmt.Scanln(&f, &l)
+	n = name{f, l}
 	names = append(names, n)
-	n = name{"John", "Blow"}
+	fmt.Scanln(&f, &l)
+	n = name{f, l}
 	names = append(names, n)
 	fmt.Println(names)
 	printNames(names)

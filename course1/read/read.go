@@ -1,4 +1,4 @@
-// Package read repeatedly reads names from a file, adds them to a list and prints the list
+// Package read reads names from a file, adds them to a list and prints the list
 package main
 
 import (

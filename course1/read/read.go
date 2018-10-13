@@ -1,4 +1,4 @@
-// Package read reads names from stdin, adds them to a list and prints the list
+// Package read repeatedly reads names from stdin, adds them to a list and prints the list
 package main
 
 import (
@@ -9,9 +9,13 @@ import (
 
 func main() {
 	names := make([]name, 0, 3)
-	n, err := readName(os.Stdin)
-	if err == nil {
-		names = append(names, n)
+	var n name
+	var err error
+	for err != io.EOF {
+		n, err = readName(os.Stdin)
+		if err == nil {
+			names = append(names, n)
+		}
 	}
 	fmt.Println(names)
 	printNames(names)

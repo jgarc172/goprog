@@ -1,4 +1,4 @@
-// Package bubble provides prompts the user to enter a sequence of integers to be
+// Package bubble prompts the user to enter a sequence of integers to be
 // printed in ascending order
 package main
 

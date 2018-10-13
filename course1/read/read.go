@@ -1,4 +1,4 @@
-// Package read repeatedly reads names from stdin, adds them to a list and prints the list
+// Package read repeatedly reads names from a file, adds them to a list and prints the list
 package main
 
 import (
@@ -8,16 +8,23 @@ import (
 )
 
 func main() {
+	fileName := readFileName()
+	file, fErr := os.Open(fileName)
+	if fErr != nil {
+		fmt.Println("failed to open file", fileName)
+		os.Exit(1)
+	}
+	defer file.Close()
+
 	names := make([]name, 0, 3)
 	var n name
 	var err error
 	for err != io.EOF {
-		n, err = readName(os.Stdin)
+		n, err = readName(file)
 		if err == nil {
 			names = append(names, n)
 		}
 	}
-	fmt.Println(names)
 	printNames(names)
 }
 
@@ -26,6 +33,11 @@ type name struct {
 	lname string
 }
 
+func readFileName() (fileName string) {
+	fmt.Print("File name: ")
+	fmt.Scanln(&fileName)
+	return
+}
 func readName(r io.Reader) (name, error) {
 	var n name
 	var f, l string

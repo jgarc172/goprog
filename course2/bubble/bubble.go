@@ -28,8 +28,8 @@ func BubbleSort(ints []int) {
 	// ints is a slice from 0 to N
 	N := len(ints) - 1
 	// assumes ints is not sorted
+	// and repeats until ints is sorted
 	isSorted := false
-	// repeat until ints is sorted
 	for !isSorted {
 		// now assumes ints is sorted
 		// if every pair of elements is in order

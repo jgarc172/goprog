@@ -4,11 +4,12 @@ package main
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
 func main() {
 	names := make([]name, 0, 3)
-	n, err := readName()
+	n, err := readName(os.Stdin)
 	if err == nil {
 		names = append(names, n)
 	}
@@ -21,10 +22,10 @@ type name struct {
 	lname string
 }
 
-func readName() (name, error) {
+func readName(r io.Reader) (name, error) {
 	var n name
 	var f, l string
-	_, err := fmt.Scanln(&f, &l)
+	_, err := fmt.Fscanln(r, &f, &l)
 	if err != nil {
 		return n, io.EOF
 	}

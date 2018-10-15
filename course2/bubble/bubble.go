@@ -1,4 +1,4 @@
-// Package bubble prompts the user to enter a sequence of integers to be
+// Package bubble prompts the user for a sequence of integers to be
 // printed in ascending order
 package main
 
@@ -11,16 +11,16 @@ import (
 )
 
 func main() {
-	ints := make([]int, 0, 3)
-
 	fmt.Println("Please enter a sequence of integer values, separated by a space.")
 
-	ints = ReadInts()
+	ints := ReadInts()
 	BubbleSort(ints)
 	for _, n := range ints {
 		fmt.Print(n, " ")
 	}
-	fmt.Println("\nThe sequence is sorted:", isSorted(ints))
+	if len(ints) > 0 {
+		fmt.Println("\nThe sequence is sorted:", isSorted(ints))
+	}
 }
 
 // ReadInts reads integers from stdin and returns them as a slice of integers

@@ -1,13 +1,14 @@
 // Package motion defines functions of motion
-// and prints displacements for two values of time
+// prompts the user for parameter values and prints the displacement
 package main
 
 import "fmt"
 
 func main() {
-	fn := GenDisplaceFn(10, 2, 1)
-	fmt.Println(fn(3))
-	fmt.Println(fn(5))
+	a, v0, s0 := readParams()
+	fn := GenDisplaceFn(a, v0, s0)
+	t := readTime()
+	fmt.Println(fn(t))
 }
 
 // Displacement as a function of time
@@ -19,5 +20,24 @@ func GenDisplaceFn(a, v0, s0 float64) (fn Displacement) {
 	fn = func(t float64) float64 {
 		return 0.5*a*t*t + v0*t + s0
 	}
+	return
+}
+
+// readParams prompts for acceleration
+// initial velocity and displacement
+func readParams() (a, v0, s0 float64) {
+	fmt.Print("acceleration: ")
+	fmt.Scanln(&a)
+	fmt.Print("initial velocity: ")
+	fmt.Scanln(&v0)
+	fmt.Print("initial displacement: ")
+	fmt.Scanln(&s0)
+	return
+}
+
+// readTime prompts for a time value
+func readTime() (t float64) {
+	fmt.Print("time: ")
+	fmt.Scanln(&t)
 	return
 }

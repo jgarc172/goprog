@@ -18,15 +18,19 @@ func init() {
 func main() {
 	var name, method string
 
-	fmt.Println("Usage: animal method | exit")
+	usage := "Usage: animal method | exit"
+	fmt.Println(usage)
 	for name != "exit" {
 		fmt.Print("> ")
 		n, _ := fmt.Scanln(&name, &method)
 		if n < 2 {
+			fmt.Println(usage)
 			continue
 		}
 		if animal, ok := animals[name]; ok {
 			fmt.Println(animal.invoke(method))
+		} else {
+			fmt.Println(name, "is not an animal")
 		}
 	}
 }

@@ -1,5 +1,5 @@
-// Package interface provides a shell
-// to prompt the user to create an animal or query for an animal
+// Pab.age interface provides a shell
+// to prompt the user to b.eate an animal or query for an animal
 package main
 
 import (
@@ -8,7 +8,7 @@ import (
 )
 
 var animals = make(map[string]Animal)
-var usage = "usage: newanimal <name> <arg> | query <name> <arg> | exit"
+var usage = "usage: newanimal <name> <animal> | query <name> <action> | exit"
 
 func main() {
 	var cmd command
@@ -19,7 +19,7 @@ func main() {
 		n, _ := fmt.Scanln(&cmd, &name, &arg)
 		if n < 3 {
 			if cmd != "exit" {
-				fmt.Println("not enough elements")
+				fmt.Println("not enough arguments")
 				fmt.Println(usage)
 			}
 			continue
@@ -66,75 +66,66 @@ func invokeMethod(animal Animal, method string) (err error) {
 	case "speak":
 		animal.Speak()
 	default:
-		err = errors.New("unknown method")
+		err = errors.New(method + " not in actions: eat, move, speak")
 	}
 	return
+}
+
+// baseAnimal is an Animal
+type baseAnimal struct {
+	food       string
+	locomotion string
+	noise      string
+}
+
+func (b baseAnimal) Eat() {
+	fmt.Println(b.food)
+}
+func (b baseAnimal) Move() {
+	fmt.Println(b.locomotion)
+}
+
+func (b baseAnimal) Speak() {
+	fmt.Println(b.noise)
+}
+
+// Cow is an Animal
+type Cow struct {
+	baseAnimal // struct embedding
+}
+
+func newCow() Cow {
+	return Cow{baseAnimal{"grass", "walk", "moo"}}
+}
+
+// Bird is an Animal
+type Bird struct {
+	baseAnimal // struct embedding
+}
+
+func newBird() Bird {
+	return Bird{baseAnimal{"worms", "fly", "peep"}}
+}
+
+// Snake is an Animal
+type Snake struct {
+	baseAnimal // struct embedding
+}
+
+func newSnake() Snake {
+	return Snake{baseAnimal{"mice", "slither", "hsss"}}
 }
 
 func createAnimal(name, kind string) (err error) {
 	switch kind {
 	case "cow":
-		animals[name] = Cow{"grass", "walk", "moo"}
+		animals[name] = newCow()
 	case "bird":
-		animals[name] = Bird{"worms", "fly", "peep"}
+		animals[name] = newBird()
 	case "snake":
-		animals[name] = Snake{"mice", "slither", "hsss"}
+		animals[name] = newSnake()
 	default:
-		err = errors.New("unknown animal")
+		err = errors.New(kind + " not in animals: cow, bird, snake")
 	}
 	return
-}
-
-// Cow is an Animal
-type Cow struct {
-	food       string
-	locomotion string
-	noise      string
-}
-
-func (c Cow) Eat() {
-	fmt.Println(c.food)
-}
-func (c Cow) Move() {
-	fmt.Println(c.locomotion)
-}
-
-func (c Cow) Speak() {
-	fmt.Println(c.noise)
-}
-
-type Bird struct {
-	food       string
-	locomotion string
-	noise      string
-}
-
-func (b Bird) Eat() {
-	fmt.Println(b.food)
-}
-
-func (b Bird) Move() {
-	fmt.Println(b.locomotion)
-}
-
-func (b Bird) Speak() {
-	fmt.Println(b.noise)
-}
-
-type Snake struct {
-	food       string
-	locomotion string
-	noise      string
-}
-
-func (s Snake) Eat() {
-	fmt.Println(s.food)
-}
-
-func (s Snake) Move() {
-	fmt.Println(s.locomotion)
-}
-
-func (s Snake) Speak() {
-	fmt.Println(s.noise)
 }

@@ -6,19 +6,34 @@ import (
 	"fmt"
 )
 
+var usage = "usage: newanimal name arg | query name arg | exit"
+
 func main() {
-	var command, name, arg string
-	usage := "usage: newanimal name arg | query name arg | exit"
+	var cmd command
+	var name, arg string
 	fmt.Println(usage)
-	for command != "exit" {
+	for cmd != "exit" {
 		fmt.Print("> ")
-		n, _ := fmt.Scanln(&command, &name, &arg)
+		n, _ := fmt.Scanln(&cmd, &name, &arg)
 		if n < 3 {
-			if command != "exit" {
+			if cmd != "exit" {
 				fmt.Println(usage)
 			}
 			continue
 		}
-		fmt.Println(command)
+		cmd.invoke(name, arg)
+	}
+}
+
+type command string
+
+func (c command) invoke(name, arg string) {
+	switch c {
+	case "query":
+		fmt.Println(c, name, arg)
+	case "newanimal":
+		fmt.Println(c, name, arg)
+	default:
+		fmt.Println(usage)
 	}
 }

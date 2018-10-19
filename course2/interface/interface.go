@@ -1,5 +1,5 @@
 // Package interface provides a shell
-// to prompt the user for an animal name
+// to prompt the user for a command and arguments
 package main
 
 import (
@@ -7,14 +7,18 @@ import (
 )
 
 func main() {
-	var name string
-	usage := "Enter: animal-name | exit"
+	var command, name, arg string
+	usage := "usage: newanimal name arg | query name arg | exit"
 	fmt.Println(usage)
-	for name != "exit" {
+	for command != "exit" {
 		fmt.Print("> ")
-		fmt.Scanln(&name)
-		if name != "exit" {
-			fmt.Println(name)
+		n, _ := fmt.Scanln(&command, &name, &arg)
+		if n < 3 {
+			if command != "exit" {
+				fmt.Println(usage)
+			}
+			continue
 		}
+		fmt.Println(command)
 	}
 }

@@ -1,5 +1,5 @@
-// Pab.age interface provides a shell
-// to prompt the user to b.eate an animal or query for an animal
+// Package interface provides a shell
+// to prompt the user to create an animal or query for an animal
 package main
 
 import (

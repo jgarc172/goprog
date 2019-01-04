@@ -1,0 +1,15 @@
+Define Moore's law and explain why it has now stopped being true. 
+Be sure to describe all of the physical limitations that have prevented Moore's law from continuing to be true.
+
+Moore's law was the observation that the density of transistors on a chip would double every two years.  This
+decrease in transistor size had the benefit of increased performance.  However, the increase in density increased 
+the power consumption which increased the heat production creating high temperatures on the transistors and the 
+risk of melting.
+
+The first observed physical limitation then was this power wall.  But there are other physical characteristics that 
+contribute to the power wall: the switching rate and the voltage magnitude.  Switching causes more  power 
+consumptions: the higher the switching, the higher the power.  This creates a limit on the rate that the clock can 
+be increased.  The voltage magnitude contributes to power consumption in a quadratic way.  Voltage can be decreased 
+but there is also a voltage threshold to prevent noise from significantly interfering with discerning the voltage 
+magnitudes necessary to distinguish between a "1" and a "0".
+

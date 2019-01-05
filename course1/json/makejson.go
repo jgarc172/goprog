@@ -1,5 +1,5 @@
 // Package main creates a JSON encoding of a map of keys and values for
-// Name and Address, obtained from stdin
+// Name and Address, obtained from stdin.  The JSON encoding is printed.
 package main
 
 import (
@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	var attr, value string
 	contact := make(map[string]string)
 
-	attr = "name"
-	value = PromptFor(attr)
+	attr := "name"
+	value := PromptFor(attr)
 	contact[attr] = value
+
 	attr = "address"
 	value = PromptFor(attr)
 	contact[attr] = value

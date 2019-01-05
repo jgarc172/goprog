@@ -1,5 +1,5 @@
-// a program which prompts the user to enter integers and
-// stores the integers in a sorted slice
+// Package main prompts the user to enter integers and
+// stores the integers in a sorted slice and then printed
 package main
 
 import (

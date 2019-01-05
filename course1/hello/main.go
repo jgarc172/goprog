@@ -1,3 +1,4 @@
+// Package main prints a string to the screen
 package main
 
 import (

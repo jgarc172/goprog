@@ -1,5 +1,5 @@
 // Package animals provides a shell to enter animal commands
-// which are intepreted to their internal representation, and the command is invoked
+// which are interpreted to their internal representation, and the command is invoked
 package main
 
 import (

@@ -15,15 +15,14 @@ import (
 func main() {
 	answer := Prompt("Enter a string")
 
-	if Find("i", "a", "n", answer) {
+	if Contains(answer, "i", "a", "n") {
 		fmt.Println("Found!")
 	} else {
 		fmt.Println("Not Found!")
 	}
 }
 
-// Prompt asks the user with 'prompt'
-// returns the 'answer'
+// Prompt prints prompt, reads and returns the answer
 func Prompt(prompt string) (answer string) {
 	fmt.Print(prompt + ": ")
 	scanner := bufio.NewScanner(os.Stdin)
@@ -32,19 +31,14 @@ func Prompt(prompt string) (answer string) {
 	return
 }
 
-// Find returns found when it finds the corresponding matches
+// Contains returns whether all the corresponding elements are
 // at the start, end, and in the string str
-func Find(start, in, end, str string) (found bool) {
+func Contains(str, start, in, end string) bool {
 	str = strings.ToLower(str)
 
 	starts := strings.HasPrefix(str, start)
 	ends := strings.HasSuffix(str, end)
 	contains := strings.Contains(str, in)
 
-	if starts && ends && contains {
-		found = true
-	} else {
-		found = false
-	}
-	return
+	return starts && ends && contains
 }

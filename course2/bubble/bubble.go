@@ -12,7 +12,6 @@ import (
 
 func main() {
 	fmt.Println("Please enter a sequence of integer values, separated by a space.")
-
 	ints := ReadInts()
 	BubbleSort(ints)
 	for _, n := range ints {
@@ -23,7 +22,8 @@ func main() {
 	}
 }
 
-// ReadInts reads integers from stdin and returns them as a slice of integers
+// ReadInts reads a sequence of integers from stdin
+// and returns them as a slice of integers
 func ReadInts() []int {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
@@ -39,7 +39,7 @@ func ReadInts() []int {
 	return ints
 }
 
-// BubbleSort sorts slice ints in ascending order
+// BubbleSort sorts a slice of integers in ascending order
 func BubbleSort(ints []int) {
 	// ints is a slice from 0 to N
 	N := len(ints) - 1
@@ -79,9 +79,8 @@ func isSorted(ints []int) (sorted bool) {
 	N := len(ints) - 1
 	for i := 0; i < N-1; i++ {
 		if !inOrder(ints[i], ints[i+1]) {
-			return
+			return false
 		}
 	}
-	sorted = true
-	return
+	return true
 }

@@ -1,0 +1,44 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type ChopS struct{ sync.Mutex }
+
+type Philo struct {
+	leftCS, rightCS *ChopS
+}
+
+func (p Philo) eat() {
+	for {
+		p.leftCS.Lock()
+		p.rightCS.Lock()
+
+		fmt.Println("eating")
+
+		p.rightCS.Unlock()
+		p.leftCS.Unlock()
+	}
+	wg.Done()
+}
+
+var wg sync.WaitGroup
+
+func main() {
+	CSticks := make([]*ChopS, 5)
+	for i := 0; i < 5; i++ {
+		CSticks[i] = new(ChopS)
+	}
+	philos := make([]*Philo, 5)
+	for i := 0; i < 4; i++ {
+		philos[i] = &Philo{CSticks[i], CSticks[(i+1)%5]}
+		wg.Add(1)
+		go philos[i].eat()
+	}
+	philos[4] = &Philo{CSticks[0], CSticks[4]}
+	wg.Add(1)
+	go philos[4].eat()
+	wg.Wait()
+}

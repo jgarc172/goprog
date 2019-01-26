@@ -1,5 +1,5 @@
 // Package sort prompts the user for a sequence of integers to be
-// printed in ascending order
+// split into 4 slices, sorted, then combined into a sorted sequence
 package main
 
 import (
@@ -17,11 +17,6 @@ func main() {
 	fmt.Println("Please enter a sequence of integer values, separated by a space.")
 	ints := ReadInts()
 	Sort(ints)
-	for _, n := range ints {
-		fmt.Print(n, " ")
-	}
-	fmt.Println()
-
 }
 
 // ReadInts reads a sequence of integers from stdin
@@ -41,43 +36,55 @@ func ReadInts() []int {
 	return ints
 }
 
-// Sort sorts a slice of integers in ascending order
+// Sort sorts and prints a slice of integers in ascending order
+// by splitting the slice in 4 goroutines then combined
 func Sort(ints []int) {
-	length := float64(len(ints))
-	size := int(math.Round(length / 4.5))
-	var arr [4][]int
-	for i := 0; i < 3; i++ {
-		arr[i] = ints[i*size : (i+1)*size]
-	}
-	arr[3] = ints[3*size:]
-	fmt.Println(arr)
+	fmt.Println("Splitting array into 4 arrays")
+	arrays := Split4(ints)
+	fmt.Println("and sorting them")
 	var wg sync.WaitGroup
 	for i := 0; i < 4; i++ {
 		wg.Add(1)
 		go func(n int) {
-			sort.Ints(arr[n])
+			fmt.Println("Sorting array: ", arrays[n])
+			sort.Ints(arrays[n])
 			wg.Done()
 		}(i)
 	}
 	wg.Wait()
-	fmt.Println(arr)
 
-	arrA := make([]int, len(arr[0])+len(arr[1]))
+	finalArr := Merge4(arrays)
+	fmt.Println("1 sorted array")
+	fmt.Println(finalArr)
+}
+
+// Split4 splits slice ints into an array of 4 slices
+func Split4(ints []int) (newArr [4][]int) {
+	length := float64(len(ints))
+	size := int(math.Round(length / 4.5))
+	for i := 0; i < 3; i++ {
+		newArr[i] = ints[i*size : (i+1)*size]
+	}
+	newArr[3] = ints[3*size:]
+	return
+}
+
+// Merge4 merges 4 sorted slices of integers into one sorted slice
+func Merge4(arrays [4][]int) []int {
+	var wg sync.WaitGroup
+	arrA := make([]int, len(arrays[0])+len(arrays[1]))
 	wg.Add(1)
-	go MergeSort(arr[0], arr[1], arrA, &wg)
-	arrB := make([]int, len(arr[2])+len(arr[3]))
+	go MergeSort(arrays[0], arrays[1], arrA, &wg)
+	arrB := make([]int, len(arrays[2])+len(arrays[3]))
 	wg.Add(1)
-	go MergeSort(arr[2], arr[3], arrB, &wg)
+	go MergeSort(arrays[2], arrays[3], arrB, &wg)
 	wg.Wait()
-
-	fmt.Println(arrA, arrB)
 
 	arrC := make([]int, len(arrA)+len(arrB))
 	wg.Add(1)
 	go MergeSort(arrA, arrB, arrC, &wg)
 	wg.Wait()
-
-	fmt.Println(arrC)
+	return arrC
 }
 
 // MergeSort merges two sorted arrays into the third array
@@ -109,11 +116,4 @@ func MergeSort(arr1, arr2, arr3 []int, wg *sync.WaitGroup) {
 		k++
 	}
 	wg.Done()
-}
-
-// MergeChan merges two channels of sorted integers into one sorted channel chan3
-func MergeChan(chan1, chan2, chan3 chan int) {
-
-	for {
-	}
 }
